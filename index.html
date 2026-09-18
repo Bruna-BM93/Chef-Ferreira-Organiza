@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chef Ferreira Organiza — Plataforma Integrada de Gestão de Eventos e Gastronomia</title>
+  <meta name="description" content="Sistema integrado para empresas de eventos e gastronomia: CRM, Orçamentos com IA, Compras, Estoque, Fichas Técnicas, Equipe, Agenda e Custos.">
+
+  <!-- Fomantic-UI (Semantic UI fork com suporte atualizado a Calendário, Toasts e FontAwesome) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+  
+  <!-- Estilos Customizados & Identidade Gastronômica -->
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div class="app-container">
+  <!-- SIDEBAR LATERAL (NAVEGAÇÃO F01 - F15) -->
+  <aside class="app-sidebar" id="appSidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo-wrap">
+        <div class="brand-icon-badge">
+          <i class="utensils icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Chef Ferreira</h1>
+          <span class="sub-brand">Organiza &bull; ERP Eventos</span>
+        </div>
+      </div>
+
+      <!-- F01: Seletor de Estabelecimento/Unidade -->
+      <div class="unit-selector-wrap" title="F01: Seleção de Unidade Operacional">
+        <label><i class="building outline icon"></i> Unidade Ativa</label>
+        <select id="activeUnitSelector" onchange="App.changeUnit(this.value)">
+          <option value="u1">Buffet Matriz Jardins (SP)</option>
+          <option value="u2">Catering Faria Lima (SP)</option>
+          <option value="u3">Espaço Villa Ferreira (Campinas)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Lista com scroll dos 15 Módulos -->
+    <nav class="sidebar-menu-scroll" id="sidebarNav">
+      <div class="menu-category-title">Visão Geral & Agenda</div>
+      <a class="nav-module-item active" data-module="dashboard" onclick="App.navigate('dashboard')">
+        <div class="left-info"><i class="chart pie icon"></i> <span>Dashboard Executivo</span></div>
+        <span class="f-badge">F02</span>
+      </a>
+      <a class="nav-module-item" data-module="calendar" onclick="App.navigate('calendar')">
+        <div class="left-info"><i class="calendar alternate outline icon"></i> <span>Agenda & Google Cal</span></div>
+        <span class="f-badge">F03</span>
+      </a>
+
+      <div class="menu-category-title">Comercial & Planejamento</div>
+      <a class="nav-module-item" data-module="crm" onclick="App.navigate('crm')">
+        <div class="left-info"><i class="address book outline icon"></i> <span>Clientes & CRM (Funil)</span></div>
+        <span class="f-badge">F04</span>
+      </a>
+      <a class="nav-module-item" data-module="events" onclick="App.navigate('events')">
+        <div class="left-info"><i class="calendar plus outline icon"></i> <span>Central do Evento</span></div>
+        <span class="f-badge">F05</span>
+      </a>
+      <a class="nav-module-item" data-module="aiBudget" onclick="App.navigate('aiBudget')">
+        <div class="left-info"><i class="magic icon" style="color:#d97706;"></i> <span>Orçamento com IA</span></div>
+        <span class="f-badge">F06</span>
+      </a>
+
+      <div class="menu-category-title">Suprimentos & Gastronomia</div>
+      <a class="nav-module-item" data-module="suppliers" onclick="App.navigate('suppliers')">
+        <div class="left-info"><i class="truck icon"></i> <span>Fornecedores</span></div>
+        <span class="f-badge">F07</span>
+      </a>
+      <a class="nav-module-item" data-module="purchasing" onclick="App.navigate('purchasing')">
+        <div class="left-info"><i class="shopping cart icon"></i> <span>Compras Automáticas</span></div>
+        <span class="f-badge">F08</span>
+      </a>
+      <a class="nav-module-item" data-module="inventory" onclick="App.navigate('inventory')">
+        <div class="left-info"><i class="boxes icon"></i> <span>Estoque & Depósitos</span></div>
+        <span class="f-badge">F09</span>
+      </a>
+      <a class="nav-module-item" data-module="recipes" onclick="App.navigate('recipes')">
+        <div class="left-info"><i class="book open icon"></i> <span>Fichas Técnicas</span></div>
+        <span class="f-badge">F10</span>
+      </a>
+
+      <div class="menu-category-title">Operação & Brigada</div>
+      <a class="nav-module-item" data-module="staff" onclick="App.navigate('staff')">
+        <div class="left-info"><i class="users icon"></i> <span>Equipe & Mão de Obra</span></div>
+        <span class="f-badge">F11</span>
+      </a>
+      <a class="nav-module-item" data-module="execution" onclick="App.navigate('execution')">
+        <div class="left-info"><i class="tasks icon"></i> <span>Execução & Checklist</span></div>
+        <span class="f-badge">F12</span>
+      </a>
+      <a class="nav-module-item" data-module="requisitions" onclick="App.navigate('requisitions')">
+        <div class="left-info"><i class="dolly flatbed icon"></i> <span>Notas de Saída</span></div>
+        <span class="f-badge">F13</span>
+      </a>
+
+      <div class="menu-category-title">Controladoria & CRM</div>
+      <a class="nav-module-item" data-module="costs" onclick="App.navigate('costs')">
+        <div class="left-info"><i class="balance scale icon"></i> <span>Custos & DRE (Prev x Real)</span></div>
+        <span class="f-badge">F14</span>
+      </a>
+      <a class="nav-module-item" data-module="postSale" onclick="App.navigate('postSale')">
+        <div class="left-info"><i class="star outline icon"></i> <span>Pós-Venda & Relatórios</span></div>
+        <span class="f-badge">F15</span>
+      </a>
+    </nav>
+
+    <!-- F01: Perfil do Usuário Logado -->
+    <div class="sidebar-footer" title="F01: Perfil do Usuário e Sessão">
+      <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150&auto=format&fit=crop&q=80" alt="Chef Ferreira" class="user-avatar-sm">
+      <div class="user-info-text">
+        <div class="user-name">Chef Rodrigo Ferreira</div>
+        <div class="user-role">Chef Executivo &bull; Master</div>
+      </div>
+      <button class="ui mini icon basic inverted button" onclick="App.showLoginModal()" title="Trocar de perfil / Sair">
+        <i class="sign-out alternate icon"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ÁREA PRINCIPAL -->
+  <main class="app-main">
+    <!-- TOPBAR -->
+    <header class="app-topbar">
+      <div class="topbar-breadcrumbs">
+        <span>Chef Ferreira Organiza</span>
+        <i class="right chevron icon divider" style="font-size: 0.75rem;"></i>
+        <strong id="currentBreadcrumbTitle">Dashboard Executivo</strong>
+        <span class="ui tiny label" id="currentModuleBadge" style="background:#fef3c7; color:#92400e;">F02</span>
+      </div>
+
+      <div class="topbar-actions">
+        <!-- Simulação de Google Calendar Sync Indicator -->
+        <span class="gcal-badge" id="topbarGcalBadge" onclick="App.showGoogleSyncModal()" style="cursor: pointer;" title="Clique para detalhes da integração com Google Calendar">
+          <i class="google icon"></i> Google Calendar: <strong>Sincronizado</strong>
+        </span>
+
+        <!-- Seletor Rápido de Evento Ativo no Contexto Geral -->
+        <div class="ui mini action input" style="width: 280px;">
+          <select class="ui dropdown" id="globalEventSelect" onchange="App.setGlobalEvent(this.value)">
+            <!-- Preenchido via JS -->
+          </select>
+        </div>
+
+        <button class="ui mini button gold-button" onclick="App.openNewEventModal()">
+          <i class="plus icon"></i> Novo Evento
+        </button>
+      </div>
+    </header>
+
+    <!-- BANNER DE DEMONSTRAÇÃO DO FLUXO INTEGRADO (O Grande Diferencial) -->
+    <section class="demo-flow-banner" id="demoFlowBanner">
+      <div class="demo-banner-content">
+        <div class="demo-badge-pulse">
+          <i class="lightbulb icon"></i> FLUXO INTEGRADO
+        </div>
+        <div class="demo-banner-text">
+          <h4>Como 1 Dado Alimenta Todo o Sistema (Exemplo: 150 Convidados)</h4>
+          <p>O Evento é o HUB: Cardápio &rarr; IA gera Compras &rarr; Baixa Estoque &rarr; Escala Brigada &rarr; Agenda Cal &rarr; DRE Apura Lucro.</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="ui small button ai-magic-btn" onclick="App.runGuidedDemoFlow()">
+          <i class="play circle icon"></i> Simular Fluxo Completo (150 Convidados)
+        </button>
+        <button class="ui small basic inverted button" onclick="App.resetData()">
+          <i class="redo alternate icon"></i> Restaurar Dados
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEWPORT DINÂMICO DOS MÓDULOS (F02 a F15) -->
+    <div class="modules-viewport">
+
+      <!-- ================================================================= -->
+      <!-- F02: DASHBOARD EXECUTIVO                                         -->
+      <!-- ================================================================= -->
+      <section id="module-dashboard" class="module-page active">
+        <div class="ui grid">
+          <!-- Estatísticas Principais -->
+          <div class="sixteen wide column">
+            <div class="ui four statistics">
+              <div class="statistic">
+                <div class="value" style="color: #1e293b;">
+                  <i class="calendar check outline icon" style="font-size: 1.8rem; color: var(--primary-gold);"></i> 4
+                </div>
+                <div class="label">Eventos este Mês</div>
+              </div>
+              <div class="statistic">
+                <div class="value" style="color: #10b981;">
+                  R$ 162.6k
+                </div>
+                <div class="label">Faturamento Previsto</div>
+              </div>
+              <div class="statistic">
+                <div class="value" style="color: #d97706;">
+                  34.2%
+                </div>
+                <div class="label">Margem Média Projetada</div>
+              </div>
+              <div class="statistic">
+                <div class="value" style="color: #ef4444;" id="statCriticalInventory">
+                  2 itens
+                </div>
+                <div class="label">Alertas de Estoque Crítico</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gráfico Financeiro & Alertas Rápidos -->
+          <div class="ten wide column">
+            <div class="ui segment" style="border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h3 class="ui header" style="margin: 0;">
+                  <i class="chart line icon" style="color: var(--primary-gold);"></i>
+                  <div class="content">
+                    Desempenho Financeiro dos Eventos
+                    <div class="sub header">Faturamento Previsto x Custos Operacionais x Lucro Real</div>
+                  </div>
+                </h3>
+                <span class="ui tiny label">Setembro / Outubro 2026</span>
+              </div>
+              <div style="height: 250px; position: relative;">
+                <canvas id="dashboardFinanceChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Ação Rápida e Alertas -->
+          <div class="six wide column">
+            <div class="ui segment" style="border-radius: var(--radius-md);">
+              <h4 class="ui header" style="margin-top: 0;">
+                <i class="bell outline icon" style="color: #ef4444;"></i> Alertas Operacionais Imediatos
+              </h4>
+              <div class="ui relaxed divided list">
+                <div class="item">
+                  <i class="large exclamation triangle middle aligned icon" style="color: #ef4444;"></i>
+                  <div class="content">
+                    <a class="header" onclick="App.navigate('inventory')">Queijo Brie abaixo da demanda</a>
+                    <div class="description">Faltam 6.5 kg para atender o Casamento de 150 convidados.</div>
+                  </div>
+                </div>
+                <div class="item">
+                  <i class="large exclamation triangle middle aligned icon" style="color: #f59e0b;"></i>
+                  <div class="content">
+                    <a class="header" onclick="App.navigate('purchasing')">Ordem de Compra #089 pendente</a>
+                    <div class="description">Laticínios Serra da Bocaina aguardando aprovação de envio.</div>
+                  </div>
+                </div>
+                <div class="item">
+                  <i class="large check circle middle aligned icon" style="color: #10b981;"></i>
+                  <div class="content">
+                    <a class="header" onclick="App.navigate('calendar')">Google Calendar Sincronizado</a>
+                    <div class="description">Todos os 4 eventos e escalas sincronizados com a agenda externa.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui divider"></div>
+              <button class="ui fluid button gold-button" onclick="App.navigate('aiBudget')">
+                <i class="magic icon"></i> Simular Orçamento com IA
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabela de Próximos Eventos com Centro de Custo Integrado -->
+          <div class="sixteen wide column">
+            <div class="ui segment" style="border-radius: var(--radius-md);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 class="ui header" style="margin: 0;">Próximos Eventos Operacionais</h3>
+                <button class="ui mini basic button" onclick="App.navigate('events')">Ver Todos os Eventos &rarr;</button>
+              </div>
+
+              <table class="ui celled selectable table">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Evento & Cliente</th>
+                    <th>Data & Horários</th>
+                    <th>Convidados</th>
+                    <th>Local</th>
+                    <th>Status</th>
+                    <th>Receita Prevista</th>
+                    <th>Margem</th>
+                    <th>Ações Integradas</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardEventsTableBody">
+                  <!-- Gerado via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F03: AGENDA & SIMULAÇÃO GOOGLE CALENDAR                          -->
+      <!-- ================================================================= -->
+      <section id="module-calendar" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="calendar alternate outline icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Agenda Operacional & Google Calendar Sync
+                  <div class="sub header">Cronograma de Montagem, Recepção, Serviço, Desmontagem e Equipe de Salão</div>
+                </div>
+              </h2>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="ui button" style="background: #4285f4; color: #fff;" onclick="App.showGoogleSyncModal()">
+                <i class="google icon"></i> Sincronizar Google Calendar
+              </button>
+              <button class="ui button gold-button" onclick="App.openNewEventModal()">
+                <i class="plus icon"></i> Agendar Evento
+              </button>
+            </div>
+          </div>
+
+          <!-- Alerta de Conflito de Horário Inteligente -->
+          <div class="ui warning message" id="calendarConflictAlert" style="display: none;">
+            <i class="close icon" onclick="this.parentElement.style.display='none'"></i>
+            <div class="header"><i class="exclamation triangle icon"></i> Atenção: Alerta de Agenda Identificado</div>
+            <span id="calendarConflictMessage"></span>
+          </div>
+
+          <!-- Calendário Mensal Estilizado -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 class="ui header" style="margin:0;">Setembro / Outubro 2026</h3>
+            <div class="ui tiny buttons">
+              <button class="ui button active">Mês</button>
+              <button class="ui button">Semana</button>
+              <button class="ui button">Dia / Escala</button>
+            </div>
+          </div>
+
+          <!-- Grade de Dias -->
+          <div class="calendar-grid" id="calendarGridDays">
+            <!-- Gerado via JS -->
+          </div>
+
+          <!-- Detalhamento de Serviços do Evento Selecionado na Agenda -->
+          <div class="ui segment" style="margin-top: 24px; background: #fafafa; border-radius: var(--radius-md);">
+            <h4 class="ui header"><i class="clock outline icon"></i> Grade Horária Operacional do Evento Ativo</h4>
+            <div class="ui three steps" id="calendarServiceSteps">
+              <div class="step">
+                <i class="truck icon" style="color: #6366f1;"></i>
+                <div class="content">
+                  <div class="title">14:00 - Montagem & Mise en Place</div>
+                  <div class="description">Chegada caminhão frigorífico e preparação de fornos</div>
+                </div>
+              </div>
+              <div class="active step">
+                <i class="glass cheers icon" style="color: #d97706;"></i>
+                <div class="content">
+                  <div class="title">19:30 - Coquetel & Jantar</div>
+                  <div class="description">Recepção, serviço empratado e open bar ativo</div>
+                </div>
+              </div>
+              <div class="step">
+                <i class="box icon" style="color: #64748b;"></i>
+                <div class="content">
+                  <div class="title">03:00 - Desmontagem & Inventário</div>
+                  <div class="description">Conferência de materiais e devolução de sobras</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F04: CLIENTES & CRM (FUNIL DE VENDAS)                            -->
+      <!-- ================================================================= -->
+      <section id="module-crm" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="address book outline icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  CRM & Funil de Oportunidades Gastronômicas
+                  <div class="sub header">Acompanhamento de Noivos, Clientes Corporativos e Propostas em Negociação</div>
+                </div>
+              </h2>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <div class="ui icon input" style="width: 240px;">
+                <input type="text" id="crmSearchInput" placeholder="Buscar cliente por nome..." oninput="App.filterCRM(this.value)">
+                <i class="search icon"></i>
+              </div>
+              <button class="ui button gold-button" onclick="App.openNewClientModal()">
+                <i class="user plus icon"></i> Novo Cliente / Lead
+              </button>
+            </div>
+          </div>
+
+          <!-- Abas de Visualização do CRM (Kanban vs Tabela) -->
+          <div class="ui secondary pointing menu">
+            <a class="item active" data-crm-tab="kanban" onclick="App.switchCRMTab('kanban')">
+              <i class="columns icon"></i> Funil Kanban
+            </a>
+            <a class="item" data-crm-tab="table" onclick="App.switchCRMTab('table')">
+              <i class="list icon"></i> Tabela Detalhada & Histórico
+            </a>
+          </div>
+
+          <!-- Visualização Kanban -->
+          <div id="crmViewKanban" class="kanban-board">
+            <!-- 6 Colunas: Novo Contato, Orçamento Solicitado, Proposta Enviada, Negociação, Aprovado, Pós-Venda -->
+            <div class="kanban-col" data-stage="Novo Contato">
+              <div class="kanban-header">
+                <h4>Novo Contato</h4>
+                <span class="kanban-count-badge" id="crmCountNovo">0</span>
+              </div>
+              <div class="kanban-cards-list" id="crmColNovo"></div>
+            </div>
+
+            <div class="kanban-col" data-stage="Orçamento Solicitado">
+              <div class="kanban-header">
+                <h4>Orçamento Solicitado</h4>
+                <span class="kanban-count-badge" id="crmCountOrcamento">0</span>
+              </div>
+              <div class="kanban-cards-list" id="crmColOrcamento"></div>
+            </div>
+
+            <div class="kanban-col" data-stage="Proposta Enviada">
+              <div class="kanban-header">
+                <h4>Proposta Enviada</h4>
+                <span class="kanban-count-badge" id="crmCountProposta">0</span>
+              </div>
+              <div class="kanban-cards-list" id="crmColProposta"></div>
+            </div>
+
+            <div class="kanban-col" data-stage="Negociação">
+              <div class="kanban-header">
+                <h4>Negociação</h4>
+                <span class="kanban-count-badge" id="crmCountNegociacao">0</span>
+              </div>
+              <div class="kanban-cards-list" id="crmColNegociacao"></div>
+            </div>
+
+            <div class="kanban-col" data-stage="Aprovado">
+              <div class="kanban-header" style="border-bottom-color: #10b981;">
+                <h4 style="color: #065f46;">Aprovado &bull; Contratado</h4>
+                <span class="kanban-count-badge" style="background:#10b981; color:#fff;" id="crmCountAprovado">0</span>
+              </div>
+              <div class="kanban-cards-list" id="crmColAprovado"></div>
+            </div>
+
+            <div class="kanban-col" data-stage="Pós-Venda">
+              <div class="kanban-header" style="border-bottom-color: #8b5cf6;">
+                <h4 style="color: #5b21b6;">Pós-Venda & Fidelização</h4>
+                <span class="kanban-count-badge" style="background:#8b5cf6; color:#fff;" id="crmCountPosVenda">0</span>
+              </div>
+              <div class="kanban-cards-list" id="crmColPosVenda"></div>
+            </div>
+          </div>
+
+          <!-- Visualização em Tabela -->
+          <div id="crmViewTable" style="display: none;">
+            <table class="ui celled striped table">
+              <thead>
+                <tr>
+                  <th>Nome do Cliente</th>
+                  <th>Tipo</th>
+                  <th>Contato / WhatsApp</th>
+                  <th>Origem do Lead</th>
+                  <th>Etapa Funil</th>
+                  <th>Valor Acumulado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="crmTableBody">
+                <!-- Gerado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F05: CENTRAL DO EVENTO & NOVO EVENTO                             -->
+      <!-- ================================================================= -->
+      <section id="module-events" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="calendar plus outline icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Central de Eventos Cadastrados
+                  <div class="sub header">O Hub Central que conecta Cardápio, IA, Estoque, Equipe e Custos</div>
+                </div>
+              </h2>
+            </div>
+            <button class="ui button gold-button" onclick="App.openNewEventModal()">
+              <i class="plus icon"></i> Cadastrar Novo Evento
+            </button>
+          </div>
+
+          <!-- Cards dos Eventos -->
+          <div class="ui three cards" id="eventsCardsContainer">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F06: ORÇAMENTO INTELIGENTE COM IA (O DIFERENCIAL CENTRAL)        -->
+      <!-- ================================================================= -->
+      <section id="module-aiBudget" class="module-page">
+        <div class="ui segment ai-assistant-card" style="padding: 26px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="ai-badge"><i class="bolt icon"></i> IA Operacional ChefBot</span>
+                <h2 class="ui header" style="margin: 0;">Orçamento Inteligente com Inteligência Artificial</h2>
+              </div>
+              <p style="color: #64748b; margin: 0;">
+                Estimativa técnica de insumos, bebidas, brigada de salão e estrutura, com base no perfil de convidados e histórico gastronômico.
+              </p>
+            </div>
+            <div class="ui mini blue message" style="margin: 0; padding: 8px 14px;">
+              <i class="info circle icon"></i> Evento Vinculado: <strong id="aiActiveEventName">Casamento Marina Albuquerque (150 convidados)</strong>
+            </div>
+          </div>
+
+          <!-- Parâmetros de Entrada da IA -->
+          <div class="ui form segment" style="background: #ffffff; border-radius: var(--radius-md);">
+            <h4 class="ui dividing header"><i class="sliders horizontal icon"></i> Parâmetros para Dimensionamento pela IA</h4>
+            <div class="four fields">
+              <div class="field">
+                <label>Número de Convidados</label>
+                <input type="number" id="aiInputGuests" value="150" min="10" max="1000">
+              </div>
+              <div class="field">
+                <label>Duração Prevista (horas)</label>
+                <input type="number" id="aiInputDuration" value="7" min="2" max="14">
+              </div>
+              <div class="field">
+                <label>Padrão do Cardápio</label>
+                <select class="ui dropdown" id="aiInputMenuType">
+                  <option value="premium">Menu Degustação Nobre (Filé + Risoto Brie)</option>
+                  <option value="cocktail">Coquetel Volante & Ilhas Gastronômicas</option>
+                  <option value="executive">Almoço Executivo Empratado 3 Tempos</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Margem de Lucro Alvo</label>
+                <select class="ui dropdown" id="aiInputTargetMargin">
+                  <option value="35">35% (Padrão Recomendado)</option>
+                  <option value="30">30% (Margem Competitiva)</option>
+                  <option value="40">40% (Alta Temporada / VIP)</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+              <button class="ui button" onclick="App.resetAIEstimates()">Limpar</button>
+              <button class="ui button ai-magic-btn" id="btnCalculateAI" onclick="App.generateAIBudget()">
+                <i class="magic icon"></i> Processar Estimativa com IA
+              </button>
+            </div>
+          </div>
+
+          <!-- Indicador de Processamento / Resposta da IA -->
+          <div class="ai-thinking-indicator" id="aiThinkingBox" style="display: none;">
+            <div class="ui active mini inline loader"></div>
+            <span><strong>ChefBot IA calculando:</strong> Dimensionando 150 convidados x 380g de proteínas brutas + 6 drinks/pessoa + 1 garçom para cada 12 convidados...</span>
+          </div>
+
+          <!-- Tabela de Resultados Gerada pela IA -->
+          <div id="aiResultsSection">
+            <h3 class="ui header" style="margin-top: 24px;">
+              <i class="calculator icon" style="color: var(--primary-gold);"></i> Composição de Custos e Dimensionamento Sugerido
+            </h3>
+
+            <!-- Quatro Cards de Resumo Financeiro da IA -->
+            <div class="ui four statistics" style="margin-bottom: 20px;">
+              <div class="statistic">
+                <div class="value" id="aiStatDirectCost">R$ 34.100</div>
+                <div class="label">Custo Direto Estimado</div>
+              </div>
+              <div class="statistic">
+                <div class="value" id="aiStatSafetyMargin">R$ 3.410</div>
+                <div class="label">Margem Segurança (10%)</div>
+              </div>
+              <div class="statistic">
+                <div class="value" style="color: #10b981;" id="aiStatSellingPrice">R$ 52.500</div>
+                <div class="label">Preço Sugerido de Venda</div>
+              </div>
+              <div class="statistic">
+                <div class="value" style="color: #d97706;" id="aiStatProjectedProfit">R$ 18.400</div>
+                <div class="label">Lucro Projetado (35.0%)</div>
+              </div>
+            </div>
+
+            <!-- Tabela Detalhada de Itens Estimados -->
+            <table class="ui celled table" id="aiItemsTable">
+              <thead>
+                <tr>
+                  <th>Categoria</th>
+                  <th>Item / Especificação Técnica</th>
+                  <th>Qtd Sugerida</th>
+                  <th>Unid</th>
+                  <th>Custo Unit.</th>
+                  <th>Subtotal</th>
+                  <th>Justificativa Técnica da IA</th>
+                </tr>
+              </thead>
+              <tbody id="aiItemsTableBody">
+                <!-- Gerado via JS -->
+              </tbody>
+            </table>
+
+            <!-- Ações de Aprovação da IA -->
+            <div class="ui segment" style="background: #f8fafc; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <i class="shield alternate icon" style="color: #10b981;"></i>
+                <span>A aprovação deste orçamento atualizará a demanda de <strong>Compras</strong> e reserva no <strong>Estoque</strong>.</span>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="ui button" onclick="App.exportBudgetPDF()"><i class="print icon"></i> Exportar Proposta</button>
+                <button class="ui button gold-button" onclick="App.approveAIBudget()">
+                  <i class="check circle icon"></i> Aprovar Orçamento e Integrar ao Sistema
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F07: FORNECEDORES & COTAÇÕES                                     -->
+      <!-- ================================================================= -->
+      <section id="module-suppliers" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="truck icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Fornecedores Homologados & Tabela de Preços
+                  <div class="sub header">Parceiros de Carnes Nobres, Hortifrúti Orgânico, Bebidas e Locação de Louças</div>
+                </div>
+              </h2>
+            </div>
+            <button class="ui button gold-button" onclick="App.openNewSupplierModal()">
+              <i class="plus icon"></i> Novo Fornecedor
+            </button>
+          </div>
+
+          <div class="ui three cards" id="suppliersCardsContainer">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F08: COMPRAS & SOLICITAÇÕES AUTOMÁTICAS                          -->
+      <!-- ================================================================= -->
+      <section id="module-purchasing" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="shopping cart icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Compras & Ordens Automáticas
+                  <div class="sub header">Demanda da Ficha Técnica &minus; Estoque Disponível = Pedido Sugerido</div>
+                </div>
+              </h2>
+            </div>
+            <button class="ui button gold-button" onclick="App.generatePurchaseFromEvent()">
+              <i class="calculator icon"></i> Recalcular Necessidades do Evento Ativo
+            </button>
+          </div>
+
+          <!-- Mensagem Explicativa da Automação -->
+          <div class="ui info message">
+            <i class="info circle icon"></i>
+            O sistema compara o consumo dos <strong>150 convidados</strong> com as posições da <strong>Câmara Fria</strong> e <strong>Adega</strong>, agrupando os itens faltantes diretamente por fornecedor homologado.
+          </div>
+
+          <table class="ui celled table">
+            <thead>
+              <tr>
+                <th>Código Ordem</th>
+                <th>Fornecedor Homologado</th>
+                <th>Evento Vinculado</th>
+                <th>Previsão de Entrega</th>
+                <th>Itens da Requisição</th>
+                <th>Total (R$)</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="purchasingTableBody">
+              <!-- Gerado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F09: ESTOQUE & DEPÓSITOS                                         -->
+      <!-- ================================================================= -->
+      <section id="module-inventory" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="boxes icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Controle de Estoque & Almoxarifado
+                  <div class="sub header">Câmaras Frias, Adega Climatizada, Depósito Seco e Reserva por Evento</div>
+                </div>
+              </h2>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="ui button" onclick="App.openInventoryEntryModal()">
+                <i class="sign in alternate icon"></i> Registrar Entrada
+              </button>
+              <button class="ui button gold-button" onclick="App.navigate('requisitions')">
+                <i class="dolly flatbed icon"></i> Notas de Saída
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de Depósitos -->
+          <div class="ui four item menu" id="inventoryWarehouseFilter">
+            <a class="item active" onclick="App.filterInventory('all', this)">Todos os Depósitos</a>
+            <a class="item" onclick="App.filterInventory('Câmara Fria', this)">Câmaras Frias (Carnes/Laticínios)</a>
+            <a class="item" onclick="App.filterInventory('Adega', this)">Adega & Bebidas</a>
+            <a class="item" onclick="App.filterInventory('Seco', this)">Depósito Seco & Materiais</a>
+          </div>
+
+          <table class="ui celled selectable table">
+            <thead>
+              <tr>
+                <th>Insumo / Produto</th>
+                <th>Depósito / Armazenamento</th>
+                <th>Estoque Físico</th>
+                <th>Estoque Mínimo</th>
+                <th>Reservado p/ Eventos</th>
+                <th>Saldo Disponível</th>
+                <th>Custo Unit. Médio</th>
+                <th>Situação</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+              <!-- Gerado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F10: FICHAS TÉCNICAS & RECEITAS GASTRONÔMICAS                    -->
+      <!-- ================================================================= -->
+      <section id="module-recipes" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="book open icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Livro de Fichas Técnicas do Chef Ferreira
+                  <div class="sub header">Ingredientes, Fator de Correção (FC), Rendimento e Recálculo Dinâmico de Custo</div>
+                </div>
+              </h2>
+            </div>
+            <button class="ui button gold-button" onclick="App.openNewRecipeModal()">
+              <i class="plus icon"></i> Nova Ficha Técnica
+            </button>
+          </div>
+
+          <!-- Cards das Fichas Técnicas com simulador de reajuste -->
+          <div class="ui stackable two column grid" id="recipesGridContainer">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F11: EQUIPE & MÃO DE OBRA                                        -->
+      <!-- ================================================================= -->
+      <section id="module-staff" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="users icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Escala de Equipe & Brigada Operacional
+                  <div class="sub header">Chefs, Cozinheiros, Maitres, Garçons, Barmans e Steward</div>
+                </div>
+              </h2>
+            </div>
+            <button class="ui button gold-button" onclick="App.openNewStaffModal()">
+              <i class="plus icon"></i> Escalar Profissional
+            </button>
+          </div>
+
+          <!-- Tabela de Escala de Mão de Obra -->
+          <table class="ui celled table">
+            <thead>
+              <tr>
+                <th>Profissional / Função</th>
+                <th>Vínculo</th>
+                <th>Especialidade & Tarefa</th>
+                <th>Diária / Hora (R$)</th>
+                <th>Eventos Escalados</th>
+                <th>Conflito de Agenda</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="staffTableBody">
+              <!-- Gerado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F12: EXECUÇÃO DO EVENTO & CHECKLIST OPERACIONAL                  -->
+      <!-- ================================================================= -->
+      <section id="module-execution" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="tasks icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Checklist & Execução ao Vivo (Dia do Evento)
+                  <div class="sub header">Controle de Horários: Carregamento, Chegada, Montagem, Serviço e Desmontagem</div>
+                </div>
+              </h2>
+            </div>
+            <div class="ui label" style="background:#e0f2fe; color:#0369a1; font-size:0.9rem;">
+              <i class="calendar check icon"></i> Evento: <strong id="executionEventTitle">Casamento Marina Albuquerque</strong>
+            </div>
+          </div>
+
+          <!-- Barra de Progresso da Execução -->
+          <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+              <span>Progresso das Tarefas Operacionais</span>
+              <span id="executionProgressPercentText">33% Concluído</span>
+            </div>
+            <div class="ui active progress indicating" id="executionProgressBar" data-percent="33">
+              <div class="bar" style="width: 33%;"></div>
+            </div>
+          </div>
+
+          <!-- Lista Interativa do Checklist -->
+          <div id="executionChecklistContainer">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F13: NOTAS DE SAÍDA DE ESTOQUE                                   -->
+      <!-- ================================================================= -->
+      <section id="module-requisitions" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="dolly flatbed icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Notas de Saída & Devoluções de Estoque
+                  <div class="sub header">Liberação Formal de Insumos, Materiais e Controle de Retorno de Sobras/Quebras</div>
+                </div>
+              </h2>
+            </div>
+            <button class="ui button gold-button" onclick="App.openNewRequisitionModal()">
+              <i class="plus icon"></i> Nova Requisição de Saída
+            </button>
+          </div>
+
+          <div id="requisitionsContainer">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F14: CUSTOS & DRE DO EVENTO (PREVISTO VS REALIZADO)              -->
+      <!-- ================================================================= -->
+      <section id="module-costs" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="balance scale icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Controle de Custos & DRE Comparativo
+                  <div class="sub header">Custo Previsto (IA / Orçamento) vs Custo Realizado (Notas Fiscais, Diárias e Quebras)</div>
+                </div>
+              </h2>
+            </div>
+            <div class="ui green tag label" style="font-size: 0.9rem;">
+              <i class="check icon"></i> Rentabilidade Positiva
+            </div>
+          </div>
+
+          <!-- Cartões DRE do Evento Ativo -->
+          <div class="ui four statistics" style="margin-bottom: 24px;">
+            <div class="statistic">
+              <div class="value" id="dreContractedValue">R$ 52.500</div>
+              <div class="label">Receita Contratada</div>
+            </div>
+            <div class="statistic">
+              <div class="value" id="drePlannedCost">R$ 34.100</div>
+              <div class="label">Custo Previsto (IA)</div>
+            </div>
+            <div class="statistic">
+              <div class="value" id="dreActualCost">R$ 35.240</div>
+              <div class="label">Custo Realizado</div>
+            </div>
+            <div class="statistic">
+              <div class="value" style="color: #10b981;" id="dreActualProfit">R$ 17.260</div>
+              <div class="label">Lucro Real (32.9%)</div>
+            </div>
+          </div>
+
+          <!-- Tabela Analítica por Centro de Custo -->
+          <table class="ui celled structured table">
+            <thead>
+              <tr>
+                <th>Centro de Custo / Categoria</th>
+                <th>Custo Previsto (R$)</th>
+                <th>Custo Realizado (R$)</th>
+                <th>Variação</th>
+                <th>Observações e Justificativas de Auditoria</th>
+              </tr>
+            </thead>
+            <tbody id="dreTableBody">
+              <!-- Gerado via JS -->
+            </tbody>
+          </table>
+
+          <div class="ui segment" style="background: #f8fafc; border-radius: var(--radius-md); margin-top: 20px;">
+            <h4 class="ui header"><i class="chart bar outline icon"></i> Análise Comparativa Gráfica por Categoria</h4>
+            <div style="height: 220px; position: relative;">
+              <canvas id="dreCostComparisonChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- F15: RELATÓRIOS / CRM PÓS-VENDA & SATISFAÇÃO                     -->
+      <!-- ================================================================= -->
+      <section id="module-postSale" class="module-page">
+        <div class="ui segment" style="border-radius: var(--radius-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 class="ui header" style="margin: 0;">
+                <i class="star outline icon" style="color: var(--primary-gold);"></i>
+                <div class="content">
+                  Pós-Venda, NPS & Recompra
+                  <div class="sub header">Pesquisas de Satisfação, Avaliações dos Contratantes e Oportunidades Futuras</div>
+                </div>
+              </h2>
+            </div>
+            <button class="ui button gold-button" onclick="App.openNewReviewModal()">
+              <i class="paper plane outline icon"></i> Registrar Feedback / NPS
+            </button>
+          </div>
+
+          <!-- Média Geral de Satisfação -->
+          <div class="ui three statistics" style="margin-bottom: 24px;">
+            <div class="statistic">
+              <div class="value" style="color: #10b981;">100%</div>
+              <div class="label">NPS Promotores</div>
+            </div>
+            <div class="statistic">
+              <div class="value" style="color: var(--primary-gold);">5.0 / 5.0</div>
+              <div class="label">Avaliação Gastronômica Média</div>
+            </div>
+            <div class="statistic">
+              <div class="value" style="color: #3b82f6;">85%</div>
+              <div class="label">Taxa de Recompra Corporativa</div>
+            </div>
+          </div>
+
+          <div id="postSaleReviewsContainer">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ================================================================= -->
+<!-- MODAIS COMPLEMENTARES DO SISTEMA                                  -->
+<!-- ================================================================= -->
+
+<!-- Modal: F01 Troca de Estabelecimento / Usuário -->
+<div class="ui mini modal" id="loginModal">
+  <div class="header"><i class="user circle icon"></i> Perfil & Estabelecimento</div>
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>Estabelecimento / Unidade</label>
+        <select class="ui dropdown" id="modalUnitSelect">
+          <option value="u1">Buffet Matriz Jardins (SP)</option>
+          <option value="u2">Catering Faria Lima (SP)</option>
+          <option value="u3">Espaço Villa Ferreira (Campinas)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Perfil Operacional</label>
+        <select class="ui dropdown" id="modalRoleSelect">
+          <option value="Chef Executivo">Chef Executivo & Proprietário</option>
+          <option value="Gerente Operacional">Gerente Operacional de Eventos</option>
+          <option value="Comprador / Almoxarife">Comprador & Almoxarife</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui cancel button">Fechar</button>
+    <button class="ui gold-button button" onclick="App.applyUserSwitch()">Salvar Preferências</button>
+  </div>
+</div>
+
+<!-- Modal: F03 Detalhes da Integração Google Calendar -->
+<div class="ui tiny modal" id="googleSyncModal">
+  <div class="header" style="background: #4285f4; color: #fff;">
+    <i class="google icon"></i> Integração com Google Calendar
+  </div>
+  <div class="content">
+    <p>A sincronização em tempo real envia automaticamente para as agendas dos noivos, equipe e fornecedores:</p>
+    <div class="ui relaxed list">
+      <div class="item"><i class="check green icon"></i> <strong>Horário de Chegada e Descarregamento</strong> (Equipe Logística)</div>
+      <div class="item"><i class="check green icon"></i> <strong>Início da Montagem e Fornos</strong> (Brigada de Cozinha)</div>
+      <div class="item"><i class="check green icon"></i> <strong>Briefing de Serviço</strong> (Garçons e Barman)</div>
+      <div class="item"><i class="check green icon"></i> <strong>Horário de Encerramento e Devolução</strong> (Fornecedores de Louças)</div>
+    </div>
+    <div class="ui message" style="background: #f0fdf4;">
+      <i class="calendar check outline icon"></i> <strong>Status:</strong> 4 Eventos sincronizados com o ID <code>chef.ferreira.eventos@gmail.com</code>.
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui green button" onclick="$('#googleSyncModal').modal('hide'); App.notifySuccess('Google Calendar sincronizado com sucesso!')">
+      <i class="sync icon"></i> Forçar Sincronização Agora
+    </button>
+    <button class="ui cancel button">Fechar</button>
+  </div>
+</div>
+
+<!-- Modal: F04 Novo Cliente / Lead -->
+<div class="ui small modal" id="newClientModal">
+  <div class="header"><i class="user plus icon"></i> Cadastrar Novo Cliente no CRM</div>
+  <div class="content">
+    <form class="ui form" id="formNewClient" onsubmit="event.preventDefault(); App.saveNewClient();">
+      <div class="two fields">
+        <div class="field required">
+          <label>Nome Completo / Razão Social</label>
+          <input type="text" id="newClientName" placeholder="Ex: Patrícia & Felipe" required>
+        </div>
+        <div class="field required">
+          <label>Tipo de Cliente</label>
+          <select class="ui dropdown" id="newClientType">
+            <option value="Pessoa Física (Noivos)">Pessoa Física (Noivos)</option>
+            <option value="Pessoa Física (Aniversário/Social)">Pessoa Física (Social)</option>
+            <option value="Pessoa Jurídica">Pessoa Jurídica (Corporativo)</option>
+          </select>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field required">
+          <label>WhatsApp / Telefone</label>
+          <input type="text" id="newClientPhone" placeholder="(11) 99999-8888" required>
+        </div>
+        <div class="field required">
+          <label>E-mail</label>
+          <input type="email" id="newClientEmail" placeholder="contato@cliente.com" required>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Origem do Lead</label>
+          <select class="ui dropdown" id="newClientSource">
+            <option value="Instagram / Redes Sociais">Instagram / Redes Sociais</option>
+            <option value="Indicação Cerimonial">Indicação Cerimonial / Espaço</option>
+            <option value="Google Ads">Google Ads</option>
+            <option value="Cliente Recorrente">Cliente Recorrente</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Etapa Inicial no Funil</label>
+          <select class="ui dropdown" id="newClientStage">
+            <option value="Novo Contato">Novo Contato</option>
+            <option value="Orçamento Solicitado">Orçamento Solicitado</option>
+            <option value="Proposta Enviada">Proposta Enviada</option>
+            <option value="Negociação">Negociação</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Observações Iniciais / Preferências</label>
+        <textarea rows="2" id="newClientNotes" placeholder="Data pretendida, local de preferência, restrições alimentares..."></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui cancel button">Cancelar</button>
+    <button class="ui gold-button button" onclick="App.saveNewClient()">Salvar Cliente</button>
+  </div>
+</div>
+
+<!-- Modal: F05 Cadastrar Novo Evento -->
+<div class="ui medium modal" id="newEventModal">
+  <div class="header"><i class="calendar plus outline icon"></i> Cadastrar Novo Evento Gastronômico</div>
+  <div class="content">
+    <form class="ui form" id="formNewEvent" onsubmit="event.preventDefault(); App.saveNewEvent();">
+      <div class="two fields">
+        <div class="field required">
+          <label>Cliente Vinculado</label>
+          <select class="ui dropdown" id="newEventClientSelect" required>
+            <!-- Preenchido via JS -->
+          </select>
+        </div>
+        <div class="field required">
+          <label>Título / Descrição do Evento</label>
+          <input type="text" id="newEventTitle" placeholder="Ex: Casamento Beatriz & Leonardo" required>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field required">
+          <label>Data do Evento</label>
+          <input type="date" id="newEventDate" value="2026-10-15" required>
+        </div>
+        <div class="field required">
+          <label>Início da Montagem</label>
+          <input type="time" id="newEventSetupTime" value="14:00" required>
+        </div>
+        <div class="field required">
+          <label>Horário do Serviço</label>
+          <input type="time" id="newEventStartTime" value="19:30" required>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field required">
+          <label>Quantidade de Convidados</label>
+          <input type="number" id="newEventGuests" value="150" min="1" required>
+        </div>
+        <div class="field">
+          <label>Duração (horas)</label>
+          <input type="number" id="newEventDuration" value="7" min="1">
+        </div>
+        <div class="field required">
+          <label>Tipo de Evento</label>
+          <select class="ui dropdown" id="newEventType">
+            <option value="Casamento Requintado">Casamento Requintado</option>
+            <option value="Jantar Corporativo VIP">Jantar Corporativo VIP</option>
+            <option value="Aniversário Social">Aniversário Social</option>
+            <option value="Coquetel & Finger Foods">Coquetel & Finger Foods</option>
+          </select>
+        </div>
+      </div>
+      <div class="field required">
+        <label>Local do Evento / Endereço</label>
+        <input type="text" id="newEventVenue" placeholder="Ex: Espaço Contemporâneo - Pinheiros, SP" required>
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui cancel button">Cancelar</button>
+    <button class="ui gold-button button" onclick="App.saveNewEvent()">Salvar e Abrir Orçamento IA</button>
+  </div>
+</div>
+
+<!-- Modal: Demonstração Interativa Guiada Passo a Passo (O Diferencial de 150 Convidados) -->
+<div class="ui large modal" id="guidedDemoModal">
+  <div class="header" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: #fff;">
+    <i class="bolt icon" style="color: var(--primary-gold);"></i>
+    Demonstração Guiada: O Fluxo Integrado da Informação
+  </div>
+  <div class="content">
+    <p style="font-size: 1.05rem;">
+      Veja na prática como a plataforma interliga todos os 15 módulos a partir de um único evento:
+    </p>
+    <div class="ui ordered steps" style="margin-bottom: 20px;">
+      <div class="active step">
+        <div class="content">
+          <div class="title">1. Evento (150 Convidados)</div>
+          <div class="description">Casamento Marina & Rodrigo</div>
+        </div>
+      </div>
+      <div class="active step">
+        <div class="content">
+          <div class="title">2. ChefBot IA</div>
+          <div class="description">Calcula 32kg Mignon + 12 Garçons</div>
+        </div>
+      </div>
+      <div class="active step">
+        <div class="content">
+          <div class="title">3. Compras & Estoque</div>
+          <div class="description">Identifica falta de Brie e gera Ordem</div>
+        </div>
+      </div>
+      <div class="active step">
+        <div class="content">
+          <div class="title">4. DRE & Lucro</div>
+          <div class="description">Apura Lucro Real de R$ 17.260</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment" style="background: #f8fafc; font-size: 0.95rem; line-height: 1.6;">
+      <h4><i class="sync alternate icon" style="color: #10b981;"></i> O que o sistema realizou automaticamente nos bastidores:</h4>
+      <ul>
+        <li><strong>F04 CRM:</strong> Noivos saíram de Negociação para <code>Aprovado</code>.</li>
+        <li><strong>F05 Evento:</strong> HUB central criado para 150 convidados na Casa Petra.</li>
+        <li><strong>F06 Orçamento IA:</strong> Dimensionou gramaturas com base nas fichas técnicas F10, gerando preço sugerido de R$ 52.500 com 35% de margem.</li>
+        <li><strong>F08 Compras & F09 Estoque:</strong> Cruzou a necessidade com a Câmara Fria e gerou a Ordem de Compra #089 para a Serra da Bocaina.</li>
+        <li><strong>F11 Equipe & F03 Agenda:</strong> Escalou Maitre Renata, Chef Rodrigo Ferreira e 12 garçons, enviando para o Google Calendar sem conflitos.</li>
+        <li><strong>F12 Execução & F13 Saída:</strong> Gerou a Nota de Saída REQ-042 e abriu o checklist com horário de transporte às 14:00.</li>
+        <li><strong>F14 Custos DRE:</strong> Apurou custo realizado de R$ 35.240 contra R$ 34.100 orçado, mantendo lucro líquido excelente de R$ 17.260!</li>
+      </ul>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui green button" onclick="$('#guidedDemoModal').modal('hide'); App.navigate('costs')">
+      <i class="chart line icon"></i> Conferir DRE do Evento
+    </button>
+    <button class="ui cancel button">Fechar</button>
+  </div>
+</div>
+
+<!-- SCRIPTS: jQuery, Fomantic UI, Chart.js, Seed Data, App Engine -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- Nossos módulos JavaScript -->
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
